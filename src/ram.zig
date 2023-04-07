@@ -16,7 +16,7 @@ pub fn ram(buf: [:0]u8) !usize {
     used = @intToFloat(f32, (si.totalram - si.freeram - si.bufferram - si.sharedram) / (1024 * 1024));
 
     if (used < 1000) {
-        return try (std.fmt.bufPrintZ(buf[0..], " {d:.1}M/{d:.1}G ", .{ used, total })).len;
+        return (try std.fmt.bufPrintZ(buf[0..], " {d:.1}M/{d:.1}G ", .{ used, total })).len;
     }
 
     used /= 1024;
