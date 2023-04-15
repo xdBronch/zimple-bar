@@ -35,18 +35,18 @@ pub fn ram_htoplike(buf: [:0]u8) !usize {
 
     var lineBuf: [32:0]u8 = undefined;
     _ = try file.reader().readUntilDelimiter(&lineBuf, '\n');
-    total = @intToFloat(f32, atoi(lineBuf[index(u8, &lineBuf, "1234567890").?..]));
+    total = @intToFloat(f32, atoi(lineBuf[indexOfPosRange(u8, &lineBuf, 0, '1', '9').?..]));
 
     _ = try file.reader().readUntilDelimiter(&lineBuf, '\n');
-    free = @intToFloat(f32, atoi(lineBuf[index(u8, &lineBuf, "1234567890").?..]));
+    free = @intToFloat(f32, atoi(lineBuf[indexOfPosRange(u8, &lineBuf, 0, '1', '9').?..]));
 
     _ = try file.reader().readUntilDelimiter(&lineBuf, '\n');
 
     _ = try file.reader().readUntilDelimiter(&lineBuf, '\n');
-    buffered = @intToFloat(f32, atoi(lineBuf[index(u8, &lineBuf, "1234567890").?..]));
+    buffered = @intToFloat(f32, atoi(lineBuf[indexOfPosRange(u8, &lineBuf, 0, '1', '9').?..]));
 
     _ = try file.reader().readUntilDelimiter(&lineBuf, '\n');
-    cached = @intToFloat(f32, atoi(lineBuf[index(u8, &lineBuf, "1234567890").?..]));
+    cached = @intToFloat(f32, atoi(lineBuf[indexOfPosRange(u8, &lineBuf, 0, '1', '9').?..]));
 
     used = total - free - buffered - cached;
     used /= 1024;
@@ -69,4 +69,12 @@ fn atoi(buf: []u8) usize {
         ret += buf[i] - '0';
     }
     return @intCast(usize, ret);
+}
+
+fn indexOfPosRange(comptime T: type, slice: []const T, start_index: usize, min: T, max: T) ?usize {
+    var i: usize = start_index;
+    while (i < slice.len) : (i += 1) {
+        if (slice[i] >= min and slice[i] <= max) return i;
+    }
+    return null;
 }

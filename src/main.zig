@@ -36,7 +36,7 @@ pub fn main() !u8 {
             _ = c.XFlush(disp);
         }
         cursor = 0;
-        std.time.sleep(5000000000);
+        std.time.sleep(5 * std.time.ns_per_s);
     }
 
     return 0;
