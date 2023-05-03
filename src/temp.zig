@@ -1,6 +1,6 @@
 const std = @import("std");
 
-pub fn temp(buf: [:0]u8, comptime filePath: []const u8) !usize {
+pub fn temp(buf: []u8, comptime filePath: []const u8) !usize {
     var file = try std.fs.openFileAbsolute(filePath, .{ .mode = .read_only });
     defer file.close();
 

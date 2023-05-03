@@ -6,7 +6,7 @@ const f = @import("includes.zig");
 const p = @import("paths");
 
 pub fn main() !u8 {
-    var buf: [256:0]u8 = undefined;
+    var buf: [256]u8 = undefined;
     var cursor: usize = 0;
 
     var disp: ?*c.Display = c.XOpenDisplay(0);

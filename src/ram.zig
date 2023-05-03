@@ -2,7 +2,7 @@ const std = @import("std");
 const c = @cImport(@cInclude("sys/sysinfo.h"));
 const index = @import("std").mem.indexOfAny;
 
-pub fn ram(buf: [:0]u8) !usize {
+pub fn ram(buf: []u8) !usize {
     var si: c.struct_sysinfo = undefined;
 
     var total: f32 = 0;
@@ -23,7 +23,7 @@ pub fn ram(buf: [:0]u8) !usize {
     return (try std.fmt.bufPrintZ(buf[0..], " {d:.1}G/{d:.1}G ", .{ used, total })).len;
 }
 
-pub fn ram_htoplike(buf: [:0]u8) !usize {
+pub fn ram_htoplike(buf: []u8) !usize {
     var file = try std.fs.openFileAbsolute("/proc/meminfo", .{ .mode = .read_only });
     defer file.close();
 
